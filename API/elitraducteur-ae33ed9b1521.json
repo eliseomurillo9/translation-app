@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "elitraducteur",
+  "private_key_id": "ae33ed9b152130d51c3269c5bb7791b9985a3c1f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDfc8soVkCGSQvl\nDAKmxDgZs85UbmcJDu/ZIzMHOt0vHZaNV+90fTXPAoU1Cqz6wkJKvXH/0SGk3abU\nGHLpIocbKd9SHOcn8E7XVyvGv4p0ewXa1rrGOrjWiqqfX72Wrgbcdbr9Rh8tq5SJ\nJxgQdW0e3OU3QuaPkM6YcJ8/MCNqc0R74HyFLWgKM+7Qk96c4jrfqU57JnoJ6ewq\ngnutx7TmYZYEfjvu9QGPkB45BsCe0RPTkaUOvr9tHGWI+4pAXxxsnS/n9i9be6DD\nGx92KQHi87Mca6XPTNup4HbvbkCDlIIylgVo44DCDgLMKkUQF0z71G+aJofBr5rC\nyZdBB89zAgMBAAECggEAJml/aQW6vdrcwpkX85cTlceFFpqL99CrhoY4hWunDixl\n7xJIxZuonldukrmtFsZCIxsB99n5kJ/Rx/AUAOPAmfjOvQze58y1oOsJSXcv0+o6\nDW6QWPdLQwY/YnpQ2xA7ebZ7WIKvZWhzdkhUKLAm/AE5HhDQFans+eOSXIhn7ipk\nRbLSNpKSd/jGi6HvlSVE5cuPtt1YvWVZvPCyfu/XWbEcW3jnMDr7IwUAg1BGTr8E\n6/RnHRRUH7xYen2TlBi7Rb/IaqyPs3gJzqvhEUxSy71vEdmYNrI4DiW+Inzi6kYm\n3NB6W+OX/74HjZrXSa5MSFNU2NSRo8zPwV1hbSj0IQKBgQDxN5q8LOv7D/7WKS4z\nX8czlRwgcE0bw9GK/17uBuxoqSH1ys4a0il3IFBg+qkFE0ZsxRbTMWoVxCEpkcuC\n4sHAPvsXKwyVp9V8DU0QHgYVHTTMztDQzb6aHJlY+zsmbZ5lFYwYpJ2HGBiEXe76\n4s3yhLMbVcbulumYjqZsmfG0uwKBgQDtJXr4nwsX70Wgh5LcS9s4fE4Q2ybRaxYs\nIDjKJjxGKPgL65US3KqPnY5IB60XO53WqY75R0d0tqZtHqJHlseA17cic/5/S/Ix\nGdb5L2KAm7941r9HV8IApV54V3oaVQRQCXdg9wnC3tumnRP1UQRSLg+ftF3n9n/w\ns+g0Xa6AqQKBgF6g/7T+snzFo6WEdjl1Q4J65pPbOoS/5z5uPGGImcndQBNawkxH\nUjkHlkDVVOVG0IPvNasYYZO0Y4YZSgtIxdWTX5GRM9iqBNgrp6XBAYXa9VG7eLPR\nYwq2WXpM5MGIk3D4aQNp4NqUm1miOBR4UW7onBMHLYl/7pgIrkVAh0/tAoGBALpN\nfaQgXji5cvvARnHm7hwcG8BGSuKuvEaCMdst2qBLw0KqGv0seppE7uhLj4H3BfME\nVhwkEVDxxSFotZiELctcrLTWZ5Nd+LD2Wdp9jWb39J5cJv1HRlP3lpX4MybIr5Cp\nPy3gJb0AE5N7R5irwzdElGWk7zkygCR7UesBxfuxAoGBANcZjWxne679KHb6eKdh\nx9L69fM8zOVjUQ0ixqCODkX+g2iRXCKdXFBvZ4Mjt+EUxrAfg0AIeSMXYnV17I2/\nxeBytRj3bPeDwqUD11Hzlo732kUbKBmeNNE01vpgEh1jw0mISaaExZM1otqU2tHZ\n5ydJT3QiyfWs8Uw1IM3hSDQ1\n-----END PRIVATE KEY-----\n",
+  "client_email": "traducteurproject@elitraducteur.iam.gserviceaccount.com",
+  "client_id": "106359988450698572102",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/traducteurproject%40elitraducteur.iam.gserviceaccount.com"
+}
