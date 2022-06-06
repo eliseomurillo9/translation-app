@@ -3,7 +3,9 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from '@/components/HelloWorld.vue'
 import TranslateForm from '@/components/TranslateForm.vue'
 import TranslateOutput from './components/TranslateOutput.vue';
+
 import { onMounted } from '@vue/runtime-core';
+import languageOptVue from './components/languageOpt.vue';
 </script>
 
 <template>
@@ -24,7 +26,8 @@ export default {
   name: 'app',
   components: {
     TranslateForm,
-    TranslateOutput
+    TranslateOutput,
+    languageOptVue
   },
   data() {
     return {
@@ -32,17 +35,15 @@ export default {
     }
   },
   methods: {
-    async translateText(text) {
-      const response = await fetch(`https://translation.googleapis.com/language/translate/v2?q=${text}&target=es&source=en&model=base&key=AIzaSyCniWAIjzngaT_ZJPljhfNZwWl9VruR-kI`);
+    async translateText(text, codeSource) {
+      const response = await fetch(`https://translation.googleapis.com/language/translate/v2?q=${text}&target=es&source=${codeSource}&model=base&key=AIzaSyCniWAIjzngaT_ZJPljhfNZwWl9VruR-kI`);
       const resdata = await response.json();
       this.translatedText = resdata.data.translations[0].translatedText;
       
     },
+    
   },
-}
-
-
-
+};
 
 </script>
 <style>
@@ -68,5 +69,8 @@ header h1{
   padding-top: 30px;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 </style>

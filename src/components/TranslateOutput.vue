@@ -1,9 +1,6 @@
 <template>
     <div id="TranslateOutPut">
-        <div class="translatedspace">
             <p>{{ translatedText }}</p>
-        </div>
-
     </div>
 </template>
 
@@ -15,8 +12,8 @@ export default {
 </script>
 
 <style>
-.translatedspace {
-    background-color: rgb(0, 0, 0);
+#TranslateOutPut {
+    background-color: #ffff;
     border-radius: 5px;
     width: 40vw;
     min-height: 20vh;
