@@ -1,8 +1,8 @@
 <template>
-    <div id="languageOpt">
+    <div id="languageOpt" >
         <div class="list-div">
             <div v-for="(langue, i) in languesList" :key="i" class="list">
-                <input type="button" :value="langue.name" @click="selectLanguage(langue.language)" />
+                <input type="button" :value="langue.name" @click="selectLanguage(langue)" />
             </div>
         </div>
     </div>
@@ -11,10 +11,7 @@
 
 
 <script>
-import { onMounted } from 'vue'
-
 export default {
-
     data() {
         return {
             languesList: [],
@@ -30,13 +27,15 @@ export default {
             {
                 "language": "fr",
                 "name": "French"
-            }]
+            }],
         }
     },
 
     methods: {
         selectLanguage(langues) {
-            this.languageCodeSource = langues
+            this.languageCodeSource = langues.language;
+            this.languageBar.unshift(langues);
+            this.$emit('sendLanguageSource', this.languageBar, this.languageCodeSource)
         }
     },
 
@@ -44,6 +43,7 @@ export default {
         const res = await fetch('https://translation.googleapis.com/language/translate/v2/languages?target=en&key=AIzaSyCniWAIjzngaT_ZJPljhfNZwWl9VruR-kI');
         const langdata = await res.json();
         const list = langdata.data.languages.forEach(element => {
+
             return this.languesList.push(element)
         })
     }
@@ -52,21 +52,18 @@ export default {
 </script>
 
 <style>
-#LanguageOpt{
-    width: 50vw;
-    height: 100wh;
-}
 
 .list-div{
     background-color: #ffff;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    width: auto;
+    width: 88vw;
     height: auto;
     padding: 20px 0 20px 0;
+    border-radius: 5px;
 }
 
 .list-div .list{

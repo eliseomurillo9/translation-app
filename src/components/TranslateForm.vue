@@ -1,13 +1,16 @@
 
 <template>
-    <div id="translateForm">
-        <language-opt v-if="showLanguageList" :languageCodeSource="languageCodeSource"></language-opt>
+    <div id="translateForm" >
         <div class="box">
-            <div v-for="(languages, i) in languageBar" :key="i">
+            <input type="button" value="Detect Language" />
+            <!--langueBarSelector toma el codigo de lenguaje de la barra para enviarlo a app-->
+            <div v-for="(languages, i) in languageBar.slice(0,3)" :key="i" @click="langueBarSelector(languages.language)">
+
                 <input type="button" :value="languages.name" />
             </div>
+            <img src="../assets/downchevron_85745.png" alt="Menu" @click="toggleListener">
         </div>
-        <form @submit="formSubmit">
+        <form @submit="formSubmit2">
 
             <textarea v-model="textToTranslate" ref="textarea" rows="1" @input="resize($event)">
   </textarea>
@@ -20,41 +23,35 @@
 </template>
 
 <script>
-import languageOpt from './languageOpt.vue';
 
 export default {
-    components: { languageOpt },
-    props: ['languageCodeSource'],
+    props: ['languageBar'],
     name: 'translateForm',
     setup() {
         return {
             textToTranslate: '',
-            showLanguageList: false,
-            languageCodeSource: '',
-            languageBar: [{
-                "language": "es",
-                "name": "Spanish"
-            },
-            {
-                "language": "en",
-                "name": "English"
-            },
-            {
-                "language": "fr",
-                "name": "French"
-            }]
+            showSource: false,
         }
     },
 
     methods: {
-        formSubmit(e) {
-            this.$emit('formSubmit', this.textToTranslate, this.languageCodeSource);
+        formSubmit2(e) {
+            this.$emit('formSubmit', this.textToTranslate);
             e.preventDefault();
         },
 
         resize(e) {
             e.target.style.height = 'auto',
                 e.target.style.height = `${e.target.scrollHeight}px`
+        },
+        //Enviar toggle para abrir menu de idiomas
+        toggleListener(){
+            this.$emit('toggleLanguemenu', this.showSource)
+        },
+        //Envia codigo de lenguaje a app
+        langueBarSelector(languecode){
+            console.log(languecode)
+            this.$emit('sendBarCode', languecode)
         }
 
     },
@@ -64,19 +61,45 @@ export default {
 
 <style>
 .box {
-    background-color: aqua;
+    background-color: rgb(255, 255, 255);
     display: flex;
     flex-direction: row;
     justify-content: left;
-    width: 40vw
+    align-items: center;
+    width: 40vw;
+    height: 35px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    border-bottom: 0.3px solid;
+    border-bottom-color: rgba(168, 168, 168, 0.5);
 }
 
-.box input{
+.box input {
     cursor: pointer;
     background: none;
     border: none;
+    margin-left: 6px;
+    font-size: 18px;
+    color: rgb(71, 71, 71);
+    padding: 0 8px 0 8px;
+    border-radius: 5px;
 }
 
+.box input:hover {
+    background-color: rgba(194, 190, 190, 0.5);
+    color: black;
+}
+
+.box img{
+    height: 13px;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+.box img:hover{
+    background-color: rgba(194, 190, 190, 0.5);
+}
 form {
     display: flex;
     flex-direction: row;
@@ -86,15 +109,47 @@ form {
 }
 
 form :nth-child(1) {
-    border-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     width: 40vw;
     min-height: 20vh;
     border: none;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     outline: none;
 }
 
-input {
+form textarea {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    font-family: fira sans;
+    font-weight: 400;
+    font-size: 18px;
+    padding-top: 5px;
+}
+
+form input {
     height: 25px;
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    background-color: rgb(61, 158, 227);
+    color: white;
+    padding: 6px;
+    margin: 0 10px 0 10px;
+    font-family: fira sans;
+    font-weight: 600;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    transition: ease-in-out, 0.3s;
+    
+}
+
+form input:hover {
+    background-color: rgb(23, 158, 255);
+    color: #fff;
+    padding: 15px;
+    font-size: 23px;
+
 }
 </style>
