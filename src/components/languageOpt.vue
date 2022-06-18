@@ -1,5 +1,5 @@
 <template>
-    <div id="languageOpt" >
+    <div id="languageOpt">
         <div class="list-div">
             <div v-for="(langue, i) in languesList" :key="i" class="list">
                 <input type="button" :value="langue.name" @click="selectLanguage(langue)" />
@@ -16,26 +16,19 @@ export default {
         return {
             languesList: [],
             languageCodeSource: '',
-            languageBar: [{
-                "language": "es",
-                "name": "Spanish"
-            },
-            {
-                "language": "en",
-                "name": "English"
-            },
-            {
-                "language": "fr",
-                "name": "French"
-            }],
+            languageBarSelectorSource: '',
+            languageCodeTarget: '',
+            showSource: false,
         }
     },
 
     methods: {
         selectLanguage(langues) {
-            this.languageCodeSource = langues.language;
-            this.languageBar.unshift(langues);
-            this.$emit('sendLanguageSource', this.languageBar, this.languageCodeSource)
+            /* Send Language source */
+                this.languageCodeSource = langues.language;
+                this.languageBarSelectorSource = langues;
+                this.$emit('sendLanguageSource', this.languageBarSelectorSource, this.languageCodeSource, this.showSource)
+                console.log('It Works')
         }
     },
 
@@ -48,37 +41,38 @@ export default {
         })
     }
 
-}
+};
+
+
 </script>
 
 <style>
-
-.list-div{
+.list-div {
     background-color: #ffff;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    width: 88vw;
+    width: 86vw;
     height: auto;
     padding: 20px 0 20px 0;
     border-radius: 5px;
 }
 
-.list-div .list{
+.list-div .list {
     display: flex;
     justify-content: center;
     align-content: center;
 }
 
-.list-div input{
+.list-div input {
     background: none;
     color: inherit;
     border: none;
     font: inherit;
-	cursor: pointer;
-	outline: inherit;
+    cursor: pointer;
+    outline: inherit;
     text-align: center;
     width: 150px;
     height: auto;
@@ -89,7 +83,7 @@ export default {
     border-radius: 15px;
 }
 
-.list-div input:hover{
+.list-div input:hover {
     background-color: rgba(194, 190, 190, 0.5)
 }
 </style>

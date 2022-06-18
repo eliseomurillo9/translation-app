@@ -10,12 +10,14 @@ import languageOptVue from './components/languageOpt.vue';
       <img src="./assets/translate.png" alt="Logo">
       <h1>Language Translation</h1>
     </header>
-    <languageOptVue v-if="showSource" @sendLanguageSource="receiverLanguagesSouce" class="languemenu" />
+    <languageOptVue v-if="showSource" @sendLanguageSource="receiverLanguagesSouce"
+      @sendLanguageTarget='receiveLanguageTarget' class="languemenu" />
     <div class="translationarea">
       <!--Recibe funcion con showSource para crear el methods y abrir el menu // SendbarCode y received es el codigo del lenguaje seleccionado en la barra-->
-      <TranslateForm @formSubmit="textToBeTranslated" @toggleLanguemenu="LangueToggle" @sendBarCode="receivedBarCode" :translation="translation(textToTranslate, languageCodeSource)"
+      <TranslateForm @formSubmit="textToBeTranslated" @toggleLanguemenuSource="LangueToggleSource"
+        @sendBarCode="receivedBarCode" :translation="translation(textToTranslate, languageCodeSource)"
         :languageBar="languageBar"> </TranslateForm>
-      <TranslateOutput v-text="translatedText"> </TranslateOutput>
+      <TranslateOutput :translatedText="translatedText" />
     </div>
   </div>
 </template>
@@ -32,6 +34,7 @@ export default {
     return {
       translatedText: '',
       showSource: '',
+      languageBarSelectorSource: [],
       languageBar: [{
         "language": "es",
         "name": "Spanish"
@@ -45,7 +48,9 @@ export default {
         "name": "French"
       }],
       languageCodeSource: '',
-      textToTranslate: ''
+      textToTranslate: '',
+      languageCodeTarget: '',
+      showTarget: '',
     }
   },
   methods: {
@@ -53,9 +58,19 @@ export default {
       this.textToTranslate = text
 
     },
-    receiverLanguagesSouce(bar, languagesource) {
-      this.languageBar = bar;
+    receiverLanguagesSouce(bar, languagesource, closesource, btn) {
+      this.languageBarSelectorSource = bar;
       this.languageCodeSource = languagesource;
+      this.showSource = closesource
+      this.btnIndex = btn
+      this.languageBar.unshift(this.languageBarSelectorSource)
+
+    },
+
+    //Recive LanguageTarget
+    receiveLanguageTarget(languagetarget) {
+      this.languageCodeTarget = languagetarget
+      console.log('reveice', this.languageCodeTarget)
     },
 
     async translation(text, codeSource) {
@@ -64,18 +79,23 @@ export default {
       const resdata = await response.json();
       this.translatedText = resdata.data.translations[0].translatedText
     },
-    LangueToggle(){
+
+    /* reveiced Menu source opener */
+    LangueToggleSource(opensource) {
+      this.showSource = opensource
       this.showSource = !this.showSource
     },
-    //
-    receivedBarCode(langueCode){
-      this.languageCodeSource = langueCode
-      console.log('final', this.languageCodeSource)
-    }
-  },
-};
 
+    receivedBarCode(langueCode) {
+      this.languageCodeSource = langueCode
+    },
+
+  },
+
+};
 </script>
+
+
 <style>
 header {
   display: flex;
@@ -104,9 +124,9 @@ header h1 {
   justify-content: center;
 }
 
-.languemenu{
+.languemenu {
   position: absolute;
-  left: 6%;
-  top: 23%;
+  left: 7%;
+  top: 20.1%;
 }
 </style>

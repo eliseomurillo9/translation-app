@@ -1,12 +1,12 @@
 
 <template>
-    <div id="translateForm" >
+    <div id="translateForm">
         <div class="box">
             <input type="button" value="Detect Language" />
             <!--langueBarSelector toma el codigo de lenguaje de la barra para enviarlo a app-->
-            <div v-for="(languages, i) in languageBar.slice(0,3)" :key="i" @click="langueBarSelector(languages.language)">
-
-                <input type="button" :value="languages.name" />
+            <div v-for="(languages, i) in languageBar.slice(0, 3)" :key="i" @click="langueBarSelector(languages.language, i)"
+                :class="{ btnselected: i === activeBtn }">
+                <input type="button" :value="languages.name" @click="selectItem(i)" />
             </div>
             <img src="../assets/downchevron_85745.png" alt="Menu" @click="toggleListener">
         </div>
@@ -23,18 +23,31 @@
 </template>
 
 <script>
-
 export default {
     props: ['languageBar'],
     name: 'translateForm',
+
+    watch: {
+        languageBar: {
+            handler: function (newbar) {
+                console.log('change detected');
+                     this.activeBtn = 0;
+            },
+            deep: true
+        }
+    },
+
     setup() {
         return {
             textToTranslate: '',
             showSource: false,
+            activeBtn: null,
         }
     },
 
+
     methods: {
+
         formSubmit2(e) {
             this.$emit('formSubmit', this.textToTranslate);
             e.preventDefault();
@@ -45,15 +58,19 @@ export default {
                 e.target.style.height = `${e.target.scrollHeight}px`
         },
         //Enviar toggle para abrir menu de idiomas
-        toggleListener(){
-            this.$emit('toggleLanguemenu', this.showSource)
+        toggleListener() {
+            this.$emit('toggleLanguemenuSource', this.showSource)
         },
         //Envia codigo de lenguaje a app
-        langueBarSelector(languecode){
+        langueBarSelector(languecode) {
             console.log(languecode)
             this.$emit('sendBarCode', languecode)
+            //this.colorbtn = true
+        },
+        selectItem(i) {
+            this.activeBtn = i
+            console.log(this.activeBtn)
         }
-
     },
 
 }
@@ -91,15 +108,23 @@ export default {
     color: black;
 }
 
-.box img{
+.btnselected input {
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(61, 158, 227);
+
+}
+
+.box img {
     height: 13px;
     cursor: pointer;
     border-radius: 25px;
 }
 
-.box img:hover{
+.box img:hover {
     background-color: rgba(194, 190, 190, 0.5);
 }
+
 form {
     display: flex;
     flex-direction: row;
@@ -129,7 +154,7 @@ form input {
     height: 25px;
     cursor: pointer;
     border: none;
-    border-radius: 15px;
+    border-radius: 9px;
     background-color: rgb(61, 158, 227);
     color: white;
     padding: 6px;
@@ -142,14 +167,12 @@ form input {
     justify-content: center;
     align-content: center;
     transition: ease-in-out, 0.3s;
-    
+
 }
 
 form input:hover {
     background-color: rgb(23, 158, 255);
     color: #fff;
-    padding: 15px;
-    font-size: 23px;
 
 }
 </style>
