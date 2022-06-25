@@ -1,15 +1,14 @@
 <template>
     <div id="TranslateOutPut">
         <div class="box">
-            <div>
-                <input type="button" value="English" />
-                <input type="button" value="Spanish" />
-                <input type="button" value="French" />
+            <div v-for="(languages, i) in languageBarTarget.slice(0, 3)" :key="i" @click="langueBarSelector(languages.language, i)"
+                :class="{ btnselectedt: i === activeBtnT }">
+                <input type="button" :value="languages.name" @click="selectItemT(i)" />
             </div>
             <img src="../assets/downchevron_85745.png" alt="Menu" @click="toggleListenerTarget">
         </div>
         <div class="translation">
-            <p>hole como estas</p>
+            <p>{{translatedText}}</p>
         </div>
 
     </div>
@@ -17,16 +16,41 @@
 
 <script>
 export default {
+    props: ['translatedText', 'languageBarTarget'],
     name: 'TranslateOutput',
-    props: ['translatedText'],
-
      setup() {
         return {
             showTarget: false,
+            activeBtnT: null
+        }
+    },
+
+    watch: {
+        languageBarTarget: {
+            handler: function (newbar) {
+                console.log('change detected');
+                     this.activeBtnT = 0;
+            },
+            deep: true
         }
     },
 
     methods: {
+      toggleListenerTarget(){
+        this.$emit('ToggleListenerTarget')
+      },
+
+      langueBarSelector(languecode) {
+            console.log(languecode)
+            this.$emit('sendBarCodeTarget', languecode)
+            //this.colorbtn = true
+        },
+
+    /*color blue in language selected*/
+      selectItemT(i) {
+            this.activeBtnT = i
+            console.log('index button', this.activeBtnT)
+        }
       
     }
 }
@@ -53,5 +77,12 @@ export default {
 
 .translation p{
     margin: 0 10px 0 10px;
+}
+
+.btnselectedt input {
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(61, 158, 227);
+
 }
 </style>

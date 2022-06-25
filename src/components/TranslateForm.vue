@@ -69,7 +69,6 @@ export default {
         },
         selectItem(i) {
             this.activeBtn = i
-            console.log(this.activeBtn)
         }
     },
 

@@ -12,23 +12,22 @@
 
 <script>
 export default {
+
     data() {
         return {
             languesList: [],
-            languageCodeSource: '',
+            languageCode: '',
             languageBarSelectorSource: '',
-            languageCodeTarget: '',
-            showSource: false,
         }
     },
 
     methods: {
         selectLanguage(langues) {
             /* Send Language source */
-                this.languageCodeSource = langues.language;
+                this.languageCode = langues.language;
                 this.languageBarSelectorSource = langues;
-                this.$emit('sendLanguageSource', this.languageBarSelectorSource, this.languageCodeSource, this.showSource)
-                console.log('It Works')
+                this.$emit('sendLanguage', this.languageBarSelectorSource, this.languageCode)
+               
         }
     },
 

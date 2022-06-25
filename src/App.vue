@@ -10,14 +10,16 @@ import languageOptVue from './components/languageOpt.vue';
       <img src="./assets/translate.png" alt="Logo">
       <h1>Language Translation</h1>
     </header>
-    <languageOptVue v-if="showSource" @sendLanguageSource="receiverLanguagesSouce"
-      @sendLanguageTarget='receiveLanguageTarget' class="languemenu" />
+    <languageOptVue v-if="showSource" @sendLanguage="receiverLanguagesSouce" class="languemenu" />
+    <languageOptVue v-if="showTarget" @sendLanguage="receiverLanguageTarget" class="languemenu" />
     <div class="translationarea">
       <!--Recibe funcion con showSource para crear el methods y abrir el menu // SendbarCode y received es el codigo del lenguaje seleccionado en la barra-->
       <TranslateForm @formSubmit="textToBeTranslated" @toggleLanguemenuSource="LangueToggleSource"
-        @sendBarCode="receivedBarCode" :translation="translation(textToTranslate, languageCodeSource)"
-        :languageBar="languageBar"> </TranslateForm>
-      <TranslateOutput :translatedText="translatedText" />
+        @sendBarCode="receivedBarCode"
+        :translation="translation(textToTranslate, languageCodeSource, languageCodeTarget)" :languageBar="languageBar">
+      </TranslateForm>
+      <TranslateOutput @ToggleListenerTarget="LangueToggleTarget" :translatedText="translatedText"
+        :languageBarTarget="languageBarTarget" @sendBarCodeTarget='receivedBarCodeTarget' />
     </div>
   </div>
 </template>
@@ -35,7 +37,20 @@ export default {
       translatedText: '',
       showSource: '',
       languageBarSelectorSource: [],
+      languageBarSelectorTarget: [],
       languageBar: [{
+        "language": "es",
+        "name": "Spanish"
+      },
+      {
+        "language": "en",
+        "name": "English"
+      },
+      {
+        "language": "fr",
+        "name": "French"
+      }],
+      languageBarTarget: [{
         "language": "es",
         "name": "Spanish"
       },
@@ -50,7 +65,8 @@ export default {
       languageCodeSource: '',
       textToTranslate: '',
       languageCodeTarget: '',
-      showTarget: '',
+      showTarget: null,
+      showSource: null,
     }
   },
   methods: {
@@ -58,38 +74,46 @@ export default {
       this.textToTranslate = text
 
     },
-    receiverLanguagesSouce(bar, languagesource, closesource, btn) {
+    receiverLanguagesSouce(bar, languagesource) {
       this.languageBarSelectorSource = bar;
       this.languageCodeSource = languagesource;
-      this.showSource = closesource
-      this.btnIndex = btn
-      this.languageBar.unshift(this.languageBarSelectorSource)
-
+      this.languageBar.unshift(this.languageBarSelectorSource);
+      this.showSource = false;
     },
 
     //Recive LanguageTarget
-    receiveLanguageTarget(languagetarget) {
-      this.languageCodeTarget = languagetarget
-      console.log('reveice', this.languageCodeTarget)
+    receiverLanguageTarget(bar, languagetarget) {
+      this.languageBarSelectorTarget = bar;
+      this.languageCodeTarget = languagetarget;
+      this.languageBarTarget.unshift(this.languageBarSelectorTarget);
+      this.showTarget = false;
     },
-
-    async translation(text, codeSource) {
-      console.log('translateText', text, codeSource)
-      const response = await fetch(`https://translation.googleapis.com/language/translate/v2?q=${text}&target=es&source=${codeSource}&model=base&key=AIzaSyCniWAIjzngaT_ZJPljhfNZwWl9VruR-kI`);
+    /* manda datos a API para traduccion */
+    async translation(text, codeSource, codetarget) {
+      console.log('translateText', text, codeSource, codetarget)
+      const response = await fetch(`https://translation.googleapis.com/language/translate/v2?q=${text}&target=${codetarget}&source=${codeSource}&model=base&key=AIzaSyCniWAIjzngaT_ZJPljhfNZwWl9VruR-kI`);
       const resdata = await response.json();
       this.translatedText = resdata.data.translations[0].translatedText
+      console.log('final', this.translatedText);
     },
 
     /* reveiced Menu source opener */
-    LangueToggleSource(opensource) {
-      this.showSource = opensource
+    LangueToggleSource() {
       this.showSource = !this.showSource
     },
 
     receivedBarCode(langueCode) {
       this.languageCodeSource = langueCode
     },
+    /* Listener para el boton de target */
+    LangueToggleTarget() {
+      this.showTarget = !this.showTarget
+    },
 
+    /*Received bar code from target*/
+    receivedBarCodeTarget(languagecodebartg) {
+      this.languageCodeTarget = languagecodebartg
+    }
   },
 
 };
