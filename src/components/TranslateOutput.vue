@@ -1,14 +1,14 @@
 <template>
     <div id="TranslateOutPut">
         <div class="box">
-            <div v-for="(languages, i) in languageBarTarget.slice(0, 3)" :key="i" @click="langueBarSelector(languages.language, i)"
-                :class="{ btnselectedt: i === activeBtnT }">
+            <div v-for="(languages, i) in languageBarTarget.slice(0, 3)" :key="i"
+                @click="langueBarSelector(languages.language, i)" :class="{ btnselected: i === activeBtn }">
                 <input type="button" :value="languages.name" @click="selectItemT(i)" />
             </div>
             <img src="../assets/downchevron_85745.png" alt="Menu" @click="toggleListenerTarget">
         </div>
         <div class="translation">
-            <p>{{translatedText}}</p>
+            <p>{{ translatedText }}</p>
         </div>
 
     </div>
@@ -18,10 +18,10 @@
 export default {
     props: ['translatedText', 'languageBarTarget'],
     name: 'TranslateOutput',
-     setup() {
+    setup() {
         return {
             showTarget: false,
-            activeBtnT: null
+            activeBtn: -1
         }
     },
 
@@ -29,29 +29,28 @@ export default {
         languageBarTarget: {
             handler: function (newbar) {
                 console.log('change detected');
-                     this.activeBtnT = 0;
+                this.activeBtnT = 0;
             },
             deep: true
         }
     },
 
     methods: {
-      toggleListenerTarget(){
-        this.$emit('ToggleListenerTarget')
-      },
-
-      langueBarSelector(languecode) {
-            console.log(languecode)
-            this.$emit('sendBarCodeTarget', languecode)
-            //this.colorbtn = true
+        toggleListenerTarget() {
+            this.$emit('ToggleListenerTarget')
         },
 
-    /*color blue in language selected*/
-      selectItemT(i) {
-            this.activeBtnT = i
-            console.log('index button', this.activeBtnT)
+        langueBarSelector(languecode) {
+            console.log(languecode)
+            this.$emit('sendBarCodeTarget', languecode)
+        },
+
+        /*color blue in language selected*/
+        selectItemT(i) {
+            this.activeBtn = i
+            console.log('index button', this.activeBtn)
         }
-      
+
     }
 }
 </script>
@@ -75,14 +74,26 @@ export default {
     padding-top: 5px;
 }
 
-.translation p{
+.translation p {
     margin: 0 10px 0 10px;
 }
 
-.btnselectedt input {
+.btnselected input {
     font-size: 20px;
     font-weight: 700;
     color: rgb(61, 158, 227);
 
+}
+
+@media screen and (max-width: 900px){
+    #TranslateOutPut{
+        margin: auto;
+        width: 100vw;
+        min-height: 25vh;
+    }
+
+    .box{
+        width: 100vw;
+    }
 }
 </style>

@@ -95,8 +95,8 @@ export default {
     cursor: pointer;
     background: none;
     border: none;
-    margin-left: 6px;
-    font-size: 18px;
+    margin: 0 5px 0 5px;
+    font-size: 1.1rem;
     color: rgb(71, 71, 71);
     padding: 0 8px 0 8px;
     border-radius: 5px;
@@ -173,5 +173,24 @@ form input:hover {
     background-color: rgb(23, 158, 255);
     color: #fff;
 
+}
+
+@media screen and (max-width: 900px){
+    form{
+        flex-direction: column;
+    }
+
+    form :nth-child(1){
+        width: 100vw;
+    }
+
+    form input{
+        margin: 10px auto;
+    }
+    
+
+    .box input{
+        font-size: 0.9rem;
+    }
 }
 </style>

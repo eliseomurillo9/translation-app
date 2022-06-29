@@ -85,4 +85,20 @@ export default {
 .list-div input:hover {
     background-color: rgba(194, 190, 190, 0.5)
 }
+
+@media screen and (max-width: 900px){
+    #languageOpt{
+        display: contents;
+        
+    }
+
+   .list-div{
+    width: 100vw;
+    display: block;
+    position: absolute;
+    top: 0;
+   }
+}
+
+
 </style>

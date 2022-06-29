@@ -16,7 +16,7 @@ import languageOptVue from './components/languageOpt.vue';
       <!--Recibe funcion con showSource para crear el methods y abrir el menu // SendbarCode y received es el codigo del lenguaje seleccionado en la barra-->
       <TranslateForm @formSubmit="textToBeTranslated" @toggleLanguemenuSource="LangueToggleSource"
         @sendBarCode="receivedBarCode"
-        :translation="translation(textToTranslate, languageCodeSource, languageCodeTarget)" :languageBar="languageBar">
+         :languageBar="languageBar">
       </TranslateForm>
       <TranslateOutput @ToggleListenerTarget="LangueToggleTarget" :translatedText="translatedText"
         :languageBarTarget="languageBarTarget" @sendBarCodeTarget='receivedBarCodeTarget' />
@@ -70,8 +70,9 @@ export default {
     }
   },
   methods: {
-    textToBeTranslated(text) {
+    async textToBeTranslated(text) {
       this.textToTranslate = text
+      await this.translation(this.textToTranslate, this.languageCodeSource, this.languageCodeTarget)
 
     },
     receiverLanguagesSouce(bar, languagesource) {
@@ -123,20 +124,20 @@ export default {
 <style>
 header {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  width: 100%;
   padding-top: 20px;
 }
 
 header img {
   height: 11vh;
-  width: auto;
+  align-self: center;
 }
 
 header h1 {
   font-family: 'Fira Sans', sans-serif;
   font-size: 2.5rem;
+  align-self: center;
+  margin-top: 8px;
 }
 
 .translationarea {
@@ -152,5 +153,15 @@ header h1 {
   position: absolute;
   left: 7%;
   top: 20.1%;
+}
+
+@media screen and (max-width: 900px) {
+  .translationarea{
+    color: aqua;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
 }
 </style>
