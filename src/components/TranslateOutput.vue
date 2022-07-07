@@ -2,7 +2,7 @@
     <div id="TranslateOutPut">
         <div class="box">
             <div v-for="(languages, i) in languageBarTarget.slice(0, 3)" :key="i"
-                @click="langueBarSelector(languages.language, i)" :class="{ btnselected: i === activeBtn }">
+                @click="langueBarSelector(languages.language, i)" :class="{ btnselected: i === activeButtonTarget }">
                 <input type="button" :value="languages.name" @click="selectItemT(i)" />
             </div>
             <img src="../assets/downchevron_85745.png" alt="Menu" @click="toggleListenerTarget">
@@ -16,24 +16,15 @@
 
 <script>
 export default {
-    props: ['translatedText', 'languageBarTarget'],
+    props: ['translatedText', 'languageBarTarget', 'activeButtonTarget'],
     name: 'TranslateOutput',
     setup() {
         return {
             showTarget: false,
-            activeBtn: -1
+            
         }
     },
 
-    watch: {
-        languageBarTarget: {
-            handler: function (newbar) {
-                console.log('change detected');
-                this.activeBtnT = 0;
-            },
-            deep: true
-        }
-    },
 
     methods: {
         toggleListenerTarget() {
@@ -48,7 +39,7 @@ export default {
         /*color blue in language selected*/
         selectItemT(i) {
             this.activeBtn = i
-            console.log('index button', this.activeBtn)
+            this.$emit('sendButtonSelected', i)
         }
 
     }

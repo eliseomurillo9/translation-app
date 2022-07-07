@@ -15,11 +15,12 @@ import languageOptVue from './components/languageOpt.vue';
     <div class="translationarea">
       <!--Recibe funcion con showSource para crear el methods y abrir el menu // SendbarCode y received es el codigo del lenguaje seleccionado en la barra-->
       <TranslateForm @formSubmit="textToBeTranslated" @toggleLanguemenuSource="LangueToggleSource"
-        @sendBarCode="receivedBarCode"
-         :languageBar="languageBar">
+        @sendBarCode="receivedBarCode" @selectedItemSource="selectedItemSource" @resetForm="resetForm"
+        :languageBar="languageBar" :activeButtonSource="activeButtonSource" :textToTranslate="textToTranslate">
       </TranslateForm>
       <TranslateOutput @ToggleListenerTarget="LangueToggleTarget" :translatedText="translatedText"
-        :languageBarTarget="languageBarTarget" @sendBarCodeTarget='receivedBarCodeTarget' />
+        :languageBarTarget="languageBarTarget" :activeButtonTarget="activeButtonTarget"
+        @sendBarCodeTarget='receivedBarCodeTarget' @sendButtonSelected="receivedButtonSelected" />
     </div>
   </div>
 </template>
@@ -39,6 +40,10 @@ export default {
       languageBarSelectorSource: [],
       languageBarSelectorTarget: [],
       languageBar: [{
+        "language": "",
+        "name": "Detect Language"
+      },
+      {
         "language": "es",
         "name": "Spanish"
       },
@@ -67,8 +72,29 @@ export default {
       languageCodeTarget: '',
       showTarget: null,
       showSource: null,
+      activeButtonSource: null,
+      activeButtonTarget: null,
     }
   },
+
+  watch: {
+        languageBar: {
+            handler: function (newbar) {
+                console.log('change detected');
+                this.activeButtonSource = 1;
+            },
+            deep: true
+        },
+
+        languageBarTarget: {
+            handler: function (newbar) {
+                console.log('change detected');
+                this.activeButtonTarget = 0;
+            },
+            deep: true
+        }
+    },
+
   methods: {
     async textToBeTranslated(text) {
       this.textToTranslate = text
@@ -78,7 +104,7 @@ export default {
     receiverLanguagesSouce(bar, languagesource) {
       this.languageBarSelectorSource = bar;
       this.languageCodeSource = languagesource;
-      this.languageBar.unshift(this.languageBarSelectorSource);
+      this.languageBar.splice(1, 0, this.languageBarSelectorSource);
       this.showSource = false;
     },
 
@@ -114,6 +140,21 @@ export default {
     /*Received bar code from target*/
     receivedBarCodeTarget(languagecodebartg) {
       this.languageCodeTarget = languagecodebartg
+    },
+    /*selector style un language bar*/
+    selectedItemSource(i) {
+      this.activeButtonSource = i
+      console.log('It Works', i);
+    },
+
+    receivedButtonSelected(i) {
+      this.activeButtonTarget = i
+    },
+
+    resetForm() {
+      this.textToTranslate = '';
+      this.translatedText = '';
+      console.log('i worked')
     }
   },
 
@@ -129,8 +170,9 @@ header {
 }
 
 header img {
-  height: 11vh;
+  height: 10vh;
   align-self: center;
+  margin-left: 4px;
 }
 
 header h1 {
@@ -151,17 +193,25 @@ header h1 {
 
 .languemenu {
   position: absolute;
-  left: 7%;
-  top: 20.1%;
+  left: 6%;
+  top: 19.2%;
 }
 
 @media screen and (max-width: 900px) {
-  .translationarea{
+  .translationarea {
     color: aqua;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
+  }
+
+  @media screen and (max-width: 500px) {
+    header h1 {
+      text-align: center;
+      width: 150px;
+      font-size: 1.6rem;
+    }
   }
 }
 </style>

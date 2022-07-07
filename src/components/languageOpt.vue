@@ -53,7 +53,7 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    width: 86vw;
+    width: 88vw;
     height: auto;
     padding: 20px 0 20px 0;
     border-radius: 5px;

@@ -2,10 +2,9 @@
 <template>
     <div id="translateForm">
         <div class="box">
-            <input type="button" value="Detect Language" />
             <!--langueBarSelector toma el codigo de lenguaje de la barra para enviarlo a app-->
-            <div v-for="(languages, i) in languageBar.slice(0, 3)" :key="i" @click="langueBarSelector(languages.language, i)"
-                :class="{ btnselected: i === activeBtn }">
+            <div v-for="(languages, i) in languageBar.slice(0, 4)" :key="i"
+                @click="langueBarSelector(languages.language, i)" :class="{ btnselected: i === activeButtonSource }">
                 <input type="button" :value="languages.name" @click="selectItem(i)" />
             </div>
             <img src="../assets/downchevron_85745.png" alt="Menu" @click="toggleListener">
@@ -14,6 +13,7 @@
 
             <textarea v-model="textToTranslate" ref="textarea" rows="1" @input="resize($event)">
   </textarea>
+            <i class="fa-solid fa-arrow-rotate-left" @click="resetForm"></i>
             <input type="submit" value="Translate">
 
         </form>
@@ -24,24 +24,15 @@
 
 <script>
 export default {
-    props: ['languageBar'],
+    props: ['languageBar', 'activeButtonSource', 'textToTranslate'],
     name: 'translateForm',
 
-    watch: {
-        languageBar: {
-            handler: function (newbar) {
-                console.log('change detected');
-                     this.activeBtn = 0;
-            },
-            deep: true
-        }
-    },
+
 
     setup() {
         return {
             textToTranslate: '',
             showSource: false,
-            activeBtn: null,
         }
     },
 
@@ -68,7 +59,11 @@ export default {
             //this.colorbtn = true
         },
         selectItem(i) {
-            this.activeBtn = i
+            this.$emit('selectedItemSource', i)
+        },
+
+        resetForm() {
+            this.$emit('resetForm')
         }
     },
 
@@ -175,22 +170,74 @@ form input:hover {
 
 }
 
-@media screen and (max-width: 900px){
-    form{
+form i {
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding-left: 10px;
+}
+
+form i:hover {
+    color: rgb(23, 158, 255);
+}
+
+@media screen and (max-width: 1340px) {
+    .box div:nth-child(4) {
+        display: none;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .box input:hover {
+            background-color: inherit;
+            color: inherit;
+        }
+    }
+}
+
+@media screen and (max-width: 1140px) {
+    .box {
+        display: flex;
+        justify-content: center;
+    }
+
+    .box div:nth-child(3) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    form {
         flex-direction: column;
     }
 
-    form :nth-child(1){
+    form :nth-child(1) {
         width: 100vw;
     }
 
-    form input{
+    form input {
         margin: 10px auto;
     }
-    
 
-    .box input{
-        font-size: 0.9rem;
+    form i {
+        color: black;
+        margin-top: 12px;
     }
+
+    .box input {
+        font-size: 1rem;
+    }
+
+    .btnselected input {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: rgb(61, 158, 227);
+
+    }
+
+    @media screen and (max-width: 300px) {
+        .box div:nth-child(1) {
+            display: none;
+        }
+    }
+
 }
 </style>
